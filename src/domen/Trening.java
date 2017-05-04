@@ -18,6 +18,7 @@ public class Trening {
 
     private List<Clan> clanovi;
     private List<Trener> treneri;
+    
     private LocalTime vremeOd;
     private LocalTime vremeDo;
     private LocalDate datum;
