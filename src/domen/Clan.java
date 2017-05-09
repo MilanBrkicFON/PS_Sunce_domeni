@@ -5,14 +5,20 @@
  */
 package domen;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Milan
  */
-public class Clan {
-
+@Entity
+public class Clan implements Serializable {
+    @Id
     private int clanID;
     private String ime;
     private String prezime;
@@ -20,6 +26,9 @@ public class Clan {
     private char pol;
     private LocalDate datumRodjenja;
     private int godinaUpisa;
+    
+    @ManyToOne
+    @JoinColumn(name = "ptt")
     private Mesto mesto;
     private boolean promenjen = false;
     
@@ -34,6 +43,11 @@ public class Clan {
         this.promenjen = promenjen;
     }
 
+    public Clan(int clanID) {
+        this.clanID = clanID;
+    }
+
+    
     public Clan(String ime, String prezime, String imeRoditelja, char pol, LocalDate datumRodjenja, int godinaUpisa, Mesto mesto) {
 
         this.ime = ime;

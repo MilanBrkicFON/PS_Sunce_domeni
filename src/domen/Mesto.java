@@ -5,17 +5,28 @@
  */
 package domen;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  *
  * @author Milan
  */
-public class Mesto {
+@Entity
+public class Mesto implements Serializable {
+    @Id
     private int ptt;
     private String naziv;
 
     public Mesto() {
     }
 
+    public Mesto(int ptt) {
+        this.ptt = ptt;
+    }
+
+    
     public Mesto(int ptt, String naziv) {
         this.ptt = ptt;
         this.naziv = naziv;

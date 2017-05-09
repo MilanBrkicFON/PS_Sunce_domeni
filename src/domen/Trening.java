@@ -5,22 +5,57 @@
  */
 package domen;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author Milan
  */
-public class Trening {
+@Entity
+public class Trening implements Serializable {
 
+    @ManyToMany
+    @JoinTable(
+            name = "tclan",
+            joinColumns = @JoinColumn(name = "clanid", referencedColumnName = "clanID"),
+            inverseJoinColumns = {
+                @JoinColumn(name = "vremeOd", referencedColumnName = "vremeOd"),
+                @JoinColumn(name = "vremeDo", referencedColumnName = "vremeDo"),
+                @JoinColumn(name = "datum", referencedColumnName = "datum"),}
+    )
     private List<Clan> clanovi;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tt",
+            joinColumns = @JoinColumn(name = "trenerId", referencedColumnName = "trenerID"),
+            inverseJoinColumns = {
+                @JoinColumn(name = "vremeOd", referencedColumnName = "vremeOd"),
+                @JoinColumn(name = "vremeDo", referencedColumnName = "vremeDo"),
+                @JoinColumn(name = "datum", referencedColumnName = "datum"),}
+    )
     private List<Trener> treneri;
-    
+
+    @Id
+    @Column(name = "vremeOd")
     private LocalTime vremeOd;
+
+    @Id
+    @Column(name = "vremeDo")
     private LocalTime vremeDo;
+
+    @Id
+    @Column(name = "datum")
     private LocalDate datum;
 
     public Trening() {
@@ -95,9 +130,8 @@ public class Trening {
             return false;
         }
         final Trening other = (Trening) obj;
-        
-//        postavi uslov za jednakost!!
 
+//        postavi uslov za jednakost!!
 //        if (this.vremeDo - other.vremeOd > 0 && this.vremeOd - other.vremeDo < 0) {
 //            return false;
 //        }

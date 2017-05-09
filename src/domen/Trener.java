@@ -5,23 +5,37 @@
  */
 package domen;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Milan
  */
-public class Trener {
+@Entity
+public class Trener implements Serializable {
 
+    @Id
     private int trenerID;
     private String ime;
     private String prezime;
     private LocalDate datumRodjenja;
     private int godineRada;
     private String kratakCV;
+
+    @ManyToOne
+    @JoinColumn(name = "sportID")
     private Sport sport;
 
     public Trener() {
+    }
+
+    public Trener(int trenerID) {
+        this.trenerID = trenerID;
     }
 
     public Trener(int trenerID, String ime, String prezime, LocalDate datumRodjenja, int godineRada, String kratakCV, Sport sport) {
