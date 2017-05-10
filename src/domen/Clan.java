@@ -11,12 +11,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
  * @author Milan
  */
 @Entity
+@Table(name="clan"
+    ,catalog="pssunce"
+)
 public class Clan implements Serializable {
     @Id
     private int clanID;
@@ -24,12 +29,15 @@ public class Clan implements Serializable {
     private String prezime;
     private String imeRoditelja;
     private char pol;
+    
     private LocalDate datumRodjenja;
     private int godinaUpisa;
     
     @ManyToOne
     @JoinColumn(name = "ptt")
     private Mesto mesto;
+    
+    @Transient
     private boolean promenjen = false;
     
     public Clan() {
