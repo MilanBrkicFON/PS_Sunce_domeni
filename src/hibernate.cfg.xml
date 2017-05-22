@@ -14,5 +14,7 @@
         <mapping class="domen.Sport"></mapping>
         <mapping class="domen.Trener"></mapping>
         <mapping class="domen.Trening"></mapping>
+        <mapping class="domen.Korisnik"></mapping>
+        
     </session-factory>
 </hibernate-configuration>
