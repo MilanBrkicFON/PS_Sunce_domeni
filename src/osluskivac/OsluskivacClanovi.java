@@ -6,12 +6,13 @@
 package osluskivac;
 
 import domen.Clan;
+import java.io.Serializable;
 
 /**
  *
  * @author Milan
  */
-public interface OsluskivacClanovi {
+public interface OsluskivacClanovi extends Serializable{
     public void oDodajClana(Clan clan);
 
     public void oObrisiClana(Clan clan);
