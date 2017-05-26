@@ -5,15 +5,15 @@
  */
 package osluskivac;
 
-import domen.Clan;
+import domen.Trener;
 import java.io.Serializable;
 
 /**
  *
  * @author Milan
  */
-public interface OsluskivacClanovi extends Serializable{
-    public void oDodajClan(Clan clan);
+public interface OsluskivacTreneri extends Serializable{
+    public void oDodajTrenera(Trener trener);
 
-    public void oObrisiClana(Clan clan);
+    public void oObrisiTrenera(Trener trener);
 }

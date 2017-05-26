@@ -60,7 +60,7 @@ public class Sport implements Serializable {
 
     @Override
     public String toString() {
-        return naziv + ", maxBrClanova=" + maxBrClanova;
+        return naziv;
     }
 
     @Override

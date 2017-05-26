@@ -48,6 +48,15 @@ public class Trener implements Serializable {
         this.sport = sport;
     }
 
+    public Trener(String ime, String prezime, LocalDate datumRodjenja, int godineRada, String cv, Sport sport) {
+        this.ime = ime;
+        this.prezime = prezime;
+        this.datumRodjenja = datumRodjenja;
+        this.godineRada = godineRada;
+        this.kratakCV = cv;
+        this.sport = sport;
+    }
+
     public int getTrenerID() {
         return trenerID;
     }
@@ -130,6 +139,14 @@ public class Trener implements Serializable {
     @Override
     public String toString() {
         return trenerID + " " + ime + " " + prezime;
+    }
+
+    public boolean isPromenjen() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void setPromenjen(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
