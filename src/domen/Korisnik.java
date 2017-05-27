@@ -6,27 +6,15 @@
 package domen;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Milan
  */
-@Entity
 public class Korisnik implements Serializable {
-    @Id
-    @Basic(optional = false)
     private String username;
     private String password;
-    @JoinColumn(name = "clanId", referencedColumnName = "clanID")
-    @ManyToOne
     private Clan clan;
-    @JoinColumn(name = "trenerId", referencedColumnName = "trenerID")
-    @ManyToOne
     private Trener trener;
 
     public Korisnik() {

@@ -7,23 +7,12 @@ package domen;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  *
  * @author Milan
  */
-@Entity
-@Table(name="clan"
-    ,catalog="pssunce"
-)
 public class Clan implements Serializable {
-    @Id
     private int clanID;
     private String ime;
     private String prezime;
@@ -33,11 +22,8 @@ public class Clan implements Serializable {
     private LocalDate datumRodjenja;
     private int godinaUpisa;
     
-    @ManyToOne
-    @JoinColumn(name = "ptt")
     private Mesto mesto;
     
-    @Transient
     private boolean promenjen = false;
     
     public Clan() {

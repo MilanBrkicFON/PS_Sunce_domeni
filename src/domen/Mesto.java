@@ -6,16 +6,11 @@
 package domen;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 /**
  *
  * @author Milan
  */
-@Entity
 public class Mesto implements Serializable {
-    @Id
     private int ptt;
     private String naziv;
 

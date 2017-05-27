@@ -9,60 +9,21 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 /**
  *
  * @author Milan
  */
-@Entity
-@Table(name="trening"
-    ,catalog="pssunce"
-)
 public class Trening implements Serializable {
 
-    @ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(
-            name = "tclan",
-            joinColumns = {
-                @JoinColumn(name = "vremeOd", referencedColumnName = "vremeOd"),
-                @JoinColumn(name = "vremeDo", referencedColumnName = "vremeDo"),
-                @JoinColumn(name = "datum", referencedColumnName = "datum")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "cID", referencedColumnName = "clanid")}
-    )
     private List<Clan> clanovi;
 
-    @ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(
-            name = "tt",
-            joinColumns = {
-                @JoinColumn(name = "vremeOd", referencedColumnName = "vremeOd"),
-                @JoinColumn(name = "vremeDo", referencedColumnName = "vremeDo"),
-                @JoinColumn(name = "datum", referencedColumnName = "datum")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "tID", referencedColumnName = "trenerID")}
-    )
     private List<Trener> treneri;
 
-    @Id
-    @Column(name = "vremeOd")
     private LocalTime vremeOd;
 
-    @Id
-    @Column(name = "vremeDo")
     private LocalTime vremeDo;
 
-    @Id
-    @Column(name = "datum")
     private LocalDate datum;
 
     public Trening() {

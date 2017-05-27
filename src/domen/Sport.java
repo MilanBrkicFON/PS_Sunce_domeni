@@ -6,16 +6,11 @@
 package domen;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 /**
  *
  * @author Milan
  */
-@Entity
 public class Sport implements Serializable {
-    @Id
     private int sportID;
     private String naziv;
     private int maxBrClanova;

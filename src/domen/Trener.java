@@ -7,19 +7,13 @@ package domen;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
  *
  * @author Milan
  */
-@Entity
 public class Trener implements Serializable {
 
-    @Id
     private int trenerID;
     private String ime;
     private String prezime;
@@ -27,8 +21,6 @@ public class Trener implements Serializable {
     private int godineRada;
     private String kratakCV;
 
-    @ManyToOne
-    @JoinColumn(name = "sportID")
     private Sport sport;
 
     public Trener() {
