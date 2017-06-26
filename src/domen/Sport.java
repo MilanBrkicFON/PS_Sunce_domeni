@@ -6,11 +6,16 @@
 package domen;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Milan
  */
-public class Sport implements Serializable {
+public class Sport implements Serializable, OpstiDomenskiObjekat {
+
     private int sportID;
     private String naziv;
     private int maxBrClanova;
@@ -22,7 +27,6 @@ public class Sport implements Serializable {
         this.sportID = sportID;
     }
 
-    
     public Sport(int sportID, String naziv, int maxBrClanova) {
         this.sportID = sportID;
         this.naziv = naziv;
@@ -78,6 +82,84 @@ public class Sport implements Serializable {
         final Sport other = (Sport) obj;
         return this.sportID == other.sportID;
     }
-    
-    
+
+    @Override
+    public String vratiNazivTabele() {
+        return "sport";
+    }
+
+    @Override
+    public String vratiVrednostiZaInsert() {
+        return "'" + this.naziv + "'," + this.maxBrClanova;
+    }
+
+    @Override
+    public List napuni(ResultSet rs) throws Exception {
+        List<Sport> sport = new ArrayList<>();
+        while (rs.next()) {
+            Sport s = new Sport();
+            s.setSportID(rs.getInt("sportId"));
+            s.setNaziv(rs.getString("nazivSporta"));
+            s.setMaxBrClanova(rs.getInt("maxBrClanova"));
+            sport.add(s);
+        }
+        return sport;
+    }
+
+    @Override
+    public String vratiUslovSaIdentifikatorom() {
+        return "WHERE sportId = " + this.sportID;
+    }
+
+    @Override
+    public String vratiIdentifikator() {
+        return "sportID";
+    }
+
+    @Override
+    public Object get(String nazivAtributa) {
+        switch (nazivAtributa) {
+            case "sportId": {
+                return getSportID();
+            }
+            case "naziv": {
+                return getNaziv();
+            }
+            case "maxBrClanova": {
+                return getMaxBrClanova();
+            }
+            default:
+                return "greska";
+        }
+    }
+
+    @Override
+    public void set(String nazivAtributa, Object vrednostAtributa) {
+        switch (nazivAtributa) {
+            case "sportId": {
+                setSportID((int) vrednostAtributa);
+                break;
+            }
+            case "naziv": {
+                setNaziv((String) vrednostAtributa);
+                break;
+            }
+            case "maxBrClanova": {
+                setMaxBrClanova((int) vrednostAtributa);
+                break;
+            }
+
+        }
+    }
+
+    @Override
+    public String vratiVrednostiZaUpdate() {
+        return "";
+    }
+
+    @Override
+    public String vratiTabeluSaUslovomSpajanja() {
+        return "";
+    }
+
 }

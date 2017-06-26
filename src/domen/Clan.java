@@ -6,26 +6,32 @@
 package domen;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
  * @author Milan
  */
-public class Clan implements Serializable {
+public class Clan implements Serializable, OpstiDomenskiObjekat {
+
     private int clanID;
     private String ime;
     private String prezime;
     private String imeRoditelja;
     private char pol;
-    
+
     private LocalDate datumRodjenja;
     private int godinaUpisa;
-    
+
     private Mesto mesto;
-    
+
     private boolean promenjen = false;
-    
+
     public Clan() {
     }
 
@@ -41,7 +47,6 @@ public class Clan implements Serializable {
         this.clanID = clanID;
     }
 
-    
     public Clan(String ime, String prezime, String imeRoditelja, char pol, LocalDate datumRodjenja, int godinaUpisa, Mesto mesto) {
 
         this.ime = ime;
@@ -150,7 +155,143 @@ public class Clan implements Serializable {
         this.mesto = mesto;
     }
 
-    public String getAttributes(){
-        return clanID + " "+ ime + " "+ prezime + " "+  datumRodjenja + " "+ godinaUpisa + " "+ getMesto().getNaziv();
+    public String getAttributes() {
+        return clanID + " " + ime + " " + prezime + " " + datumRodjenja + " " + godinaUpisa + " " + getMesto().getNaziv();
+    }
+
+    @Override
+    public String vratiNazivTabele() {
+        return "clan";
+    }
+
+    @Override
+    public String vratiVrednostiZaInsert() {
+        return " (imeClana, prezimeClana, imeRoditelja, datumRodjenjaClana, pol,godinaUpisa, ptt) VALUES("+String.format("'%s','%s','%s','%s','%s',%s,%s", ime, prezime, imeRoditelja, datumRodjenja, String.valueOf(pol), godinaUpisa, mesto.getPtt());
+    }
+
+    @Override
+    public List napuni(ResultSet rs) throws Exception {
+        try {
+            List<Clan> clanovi = new ArrayList<>();
+            while (rs.next()) {
+                int clanId = rs.getInt("clanId");
+                String ime = rs.getString("imeClana");
+                String prezime = rs.getString("prezimeClana");
+                String imeRod = rs.getString("imeRoditelja");
+                LocalDate date = rs.getDate("datumRodjenjaClana").toLocalDate();
+                char pol = rs.getString("pol").charAt(0);
+                int godinaUpisa = rs.getInt("godinaUpisa");
+
+                Mesto m = new Mesto();
+                m.setPtt(rs.getInt("ptt"));
+                m.setNaziv(rs.getString("nazivMesta"));
+
+                Clan c = new Clan(clanId, ime, prezime, imeRod, pol, date, godinaUpisa, m);
+                clanovi.add(c);
+
+            }
+            rs.close();
+            return clanovi;
+        } catch (SQLException ex) {
+            throw new Exception("Neuspesno ucitavanje clanova!", ex);
+        }
+    }
+
+    @Override
+    public String vratiUslovSaIdentifikatorom() {
+        return "WHERE clanid = " + this.clanID;
+    }
+
+    @Override
+    public String vratiIdentifikator() {
+        return "clanId";
+    }
+
+    @Override
+    public Object get(String nazivAtributa) {
+        switch (nazivAtributa) {
+            case "clanId": {
+                return clanID;
+            }
+            case "ime": {
+                return ime;
+            }
+            case "prezime": {
+                return clanID;
+            }
+            case "imeRoditelja": {
+                return imeRoditelja;
+            }
+            case "datumRodjenja": {
+                return datumRodjenja;
+            }
+            case "pol": {
+                return pol;
+            }
+            case "godinaUpisa": {
+                return godinaUpisa;
+            }
+            case "mestoId": {
+                return mesto.getPtt();
+            }
+            default:
+                return "greska";
+        }
+    }
+
+    @Override
+    public void set(String nazivAtributa, Object vrednostAtributa) {
+        switch (nazivAtributa) {
+            case "clanId": {
+                setClanID((int) vrednostAtributa);
+                break;
+            }
+            case "ime": {
+                setIme((String) vrednostAtributa);
+                break;
+            }
+            case "prezime": {
+                setPrezime((String) vrednostAtributa);
+                break;
+            }
+            case "imeRoditelja": {
+                setImeRoditelja((String) vrednostAtributa);
+                break;
+            }
+            case "datumRodjenja": {
+                setDatumRodjenja((LocalDate) vrednostAtributa);
+                break;
+            }
+            case "pol": {
+                setPol((char) vrednostAtributa);
+                break;
+            }
+            case "godinaUpisa": {
+                setGodinaUpisa((int) vrednostAtributa);
+                break;
+            }
+            case "mestoId": {
+                setMesto((Mesto) vrednostAtributa);
+                break;
+            }
+
+        }
+    }
+
+    @Override
+    public String vratiVrednostiZaUpdate() {
+        return "imeClana = '"
+                + this.ime + "', prezimeClana = '"
+                + this.prezime + "', imeRoditelja = '"
+                + this.imeRoditelja + "', datumRodjenjaClana = '"
+                + this.datumRodjenja + "', pol = '"
+                + this.pol + "', godinaUpisa = "
+                + this.godinaUpisa + ", ptt = "
+                + this.mesto.getPtt();
+    }
+
+    @Override
+    public String vratiTabeluSaUslovomSpajanja() {
+        return " JOIN mesto ON (clan.ptt = mesto.ptt)";
     }
 }
